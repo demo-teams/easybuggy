@@ -1,0 +1,28 @@
+name: "Veracode Static Analysis"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]	
+
+jobs:
+  veracode:
+    name: Veracode Static Analysis Pipeline Scan
+    runs-on: ubuntu-latest
+	steps
+    - name: Convert pipeline scan output to SARIF format
+      id: convert
+      uses: Veracode/veracode-pipeline-scan-results-to-sarif@v0.1.2
+      with:
+        pipeline-results-json: results.json
+        output-results-sarif: veracode-results.sarif
+        source-base-path-1: "^com/veracode:src/main/java/com/veracode"
+        source-base-path-2: "^WEB-INF:src/main/webapp/WEB-INF"
+        finding-rule-level: "3:1:0"
+
+    - name: upload sarif file to repository
+      uses: github/codeql-action/upload-sarif@v1
+      with: # Path to SARIF file relative to the root of the repository
+      sarif_file: veracode-results.sarif
