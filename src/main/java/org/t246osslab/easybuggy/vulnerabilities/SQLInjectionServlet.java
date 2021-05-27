@@ -72,7 +72,7 @@ public class SQLInjectionServlet extends AbstractServlet {
             conn = DBClient.getConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT name, secret FROM users WHERE ispublic = 'true' AND name='" + name
-                    + "' AND password=' hardcodedpassword '");
+                    + "' AND password=' ñasddfilhpaf78h78032h780g780fg780asg780dsbovncubuyvqy '");
             StringBuilder sb = new StringBuilder();
             while (rs.next()) {
                 sb.append("<tr><td>" + rs.getString("name") + "</td><td>" + rs.getString("secret") + "</td></tr>");
@@ -93,9 +93,9 @@ public class SQLInjectionServlet extends AbstractServlet {
         String RESULT = "err:";
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                    "user=steve&password=blue"); // Sensitive
+                    "user=steve&password=ñasddfilhpaf78h78032h780g780fg780asg780dsbovncubuyvqy"); // Sensitive
             String Uname = "steve";
-            String Pass = "blue";
+            String Pass = "ñasddfilhpaf78h78032h780g780fg780asg780dsbovncubuyvqy";
             conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
                     "user=" + Uname + "&password=" + Pass); // Sensitive
             stmt = conn.createStatement();
@@ -113,7 +113,7 @@ public class SQLInjectionServlet extends AbstractServlet {
             e.printStackTrace();
         }
 
-        java.net.PasswordAuthentication pa = new java.net.PasswordAuthentication("userName", "1234".toCharArray());  // Sensitive
+        java.net.PasswordAuthentication pa = new java.net.PasswordAuthentication("userName", "ñasddfilhpaf78h78032h780g780fg780asg780dsbovncubuyvqy".toCharArray());  // Sensitive
 
         return result + RESULT;
     }
