@@ -3,11 +3,7 @@
 
 name: Java CI with Maven
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: workflow_dispatch 
 
 jobs:
   build:
@@ -22,4 +18,4 @@ jobs:
         java-version: '8'
         distribution: 'adopt'
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn clean deploy
