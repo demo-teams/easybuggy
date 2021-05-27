@@ -97,7 +97,7 @@ public class SQLInjectionServlet extends AbstractServlet {
             String Pass = "blue";
             conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
                     "user=" + Uname + "&password=" + Pass); // Sensitive
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
             ResultSet RS = stmt.executeQuery(query);
             StringBuilder sb = new StringBuilder();
             while (RS.next()) {
