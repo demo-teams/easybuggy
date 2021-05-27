@@ -14,8 +14,11 @@
 		<!-- default properties (JDK 1.7 or earlier) -->
 		<jvm.args.perm.size>-XX:MaxPermSize=128m</jvm.args.perm.size>
 		<jvm.args.gc.log.path>-Xloggc:logs/gc.log</jvm.args.gc.log.path>
+		<sonar.projectKey>demo-teams_easybuggy</sonar.projectKey>
+  		<sonar.organization>demo-teams</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
-
+	
 	<profiles>
 		<profile>
 			<id>JDK-Switch</id>
@@ -28,7 +31,17 @@
 			</properties>
 		</profile>
 	</profiles>
-	
+	<!--distributionManagement>
+		<repository>
+			<id>release</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/${env.github_repository_owner}/${env.github_repository_name}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>https://maven.pkg.github.com/${env.github_repository_owner}/${env.github_repository_name}</url>
+		</snapshotRepository>
+	</distributionManagement-->
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
