@@ -89,7 +89,8 @@ public class SQLInjectionServlet extends AbstractServlet {
             Closer.close(stmt);
             Closer.close(conn);
         }
-        // mycode
+        // mycode        
+        String RESULT = "err:";
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
                     "user=steve&password=blue"); // Sensitive
@@ -104,7 +105,7 @@ public class SQLInjectionServlet extends AbstractServlet {
                 sb.append("<tr><td>" + RS.getString("name") + "</td><td>" + RS.getString("secret") + "</td></tr>");
             }
             if (sb.length() > 0) {
-                String RESULT = "<table class=\"table table-striped table-bordered table-hover\" style=\"font-size:small;\"><th>"
+                RESULT = "<table class=\"table table-striped table-bordered table-hover\" style=\"font-size:small;\"><th>"
                         + getMsg("label.name", req.getLocale()) + "</th><th>"
                         + getMsg("label.secret", req.getLocale()) + "</th>" + sb.toString() + "</table>";
             }
