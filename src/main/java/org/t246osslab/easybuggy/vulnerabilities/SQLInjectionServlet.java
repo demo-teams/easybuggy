@@ -3,7 +3,9 @@ package org.t246osslab.easybuggy.vulnerabilities;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.DriverManager;
 import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -22,10 +24,11 @@ public class SQLInjectionServlet extends AbstractServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+        
         try {
             String name = StringUtils.trim(req.getParameter("name"));
             String password = StringUtils.trim(req.getParameter("password"));
+            
             Locale locale = req.getLocale();
             StringBuilder bodyHtml = new StringBuilder();
 
@@ -58,9 +61,9 @@ public class SQLInjectionServlet extends AbstractServlet {
     }
 
     private String selectUsers(String name, String password, HttpServletRequest req) {
-        String query = 
-            "SELECT customerno, name " +
-            "FROM customers;";
+        String query =
+                "SELECT customerno, name " +
+                        "FROM customers;";
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -89,35 +92,28 @@ public class SQLInjectionServlet extends AbstractServlet {
         // mycode
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                   "user=steve&password=blue"); // Sensitive
+                    "user=steve&password=blue"); // Sensitive
             String Uname = "steve";
             String Pass = "blue";
             conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
                     "user=" + Uname + "&password=" + Pass); // Sensitive
-            Statement stmt = con.createStatement();
-            ResultSet RS = stmt.executeQuery(query);    
+            Statement stmt = conn.createStatement();
+            ResultSet RS = stmt.executeQuery(query);
+            StringBuilder sb = new StringBuilder();
             while (RS.next()) {
                 sb.append("<tr><td>" + RS.getString("name") + "</td><td>" + RS.getString("secret") + "</td></tr>");
-            } 
+            }
             if (sb.length() > 0) {
-                RESULT = "<table class=\"table table-striped table-bordered table-hover\" style=\"font-size:small;\"><th>"
-                            + getMsg("label.name", req.getLocale()) + "</th><th>"
-                            + getMsg("label.secret", req.getLocale()) + "</th>" + sb.toString() + "</table>";
-                }
+                String RESULT = "<table class=\"table table-striped table-bordered table-hover\" style=\"font-size:small;\"><th>"
+                        + getMsg("label.name", req.getLocale()) + "</th><th>"
+                        + getMsg("label.secret", req.getLocale()) + "</th>" + sb.toString() + "</table>";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         java.net.PasswordAuthentication pa = new java.net.PasswordAuthentication("userName", "1234".toCharArray());  // Sensitive
-        
-        int verifyAdmin(String password) {	
-            if (password.equals("Mew!")) { // Sensitive
-                return 0;
-            }
-                //Diagnostic Mode
-            return 1;
-        }
-        
+
         return result + RESULT;
     }
 }
